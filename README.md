@@ -1,53 +1,108 @@
-# BoardgameListingWebApp
+# 🚀 CI/CD Pipeline with GitLab - Java App
 
 ## Description
 
-**Board Game Database Full-Stack Web Application.**
-This web application displays lists of board games and their reviews. While anyone can view the board game lists and reviews, they are required to log in to add/ edit the board games and their reviews. The 'users' have the authority to add board games to the list and add reviews, and the 'managers' have the authority to edit/ delete the reviews on top of the authorities of users.  
+Ce projet met en place un pipeline CI/CD complet pour une application Java basée sur Maven.
+
+Le pipeline automatise les étapes suivantes :
+
+- Installation des outils nécessaires
+- Tests unitaires
+- Analyse de sécurité
+- Analyse de qualité du code (SonarQube)
+- Build de l'application
+- Création et push d'une image Docker
+- Déploiement sur Kubernetes
 
 ## Technologies
 
-- Java
-- Spring Boot
-- Amazon Web Services(AWS) EC2
-- Thymeleaf
-- Thymeleaf Fragments
-- HTML5
-- CSS
-- JavaScript
-- Spring MVC
-- JDBC
-- H2 Database Engine (In-memory)
-- JUnit test framework
-- Spring Security
-- Twitter Bootstrap
-- Maven
+☕ Java 17
+📦 Maven
+🔍 Trivy (scan de vulnérabilités)
+📊 SonarQube (analyse qualité)
+🐳 Docker
+☸️ Kubernetes
+🔁 GitLab CI/CD
 
-## Features
+## etapes du pipeline
 
-- Full-Stack Application
-- UI components created with Thymeleaf and styled with Twitter Bootstrap
-- Authentication and authorization using Spring Security
-  - Authentication by allowing the users to authenticate with a username and password
-  - Authorization by granting different permissions based on the roles (non-members, users, and managers)
-- Different roles (non-members, users, and managers) with varying levels of permissions
-  - Non-members only can see the boardgame lists and reviews
-  - Users can add board games and write reviews
-  - Managers can edit and delete the reviews
-- Deployed the application on AWS EC2
-- JUnit test framework for unit testing
-- Spring MVC best practices to segregate views, controllers, and database packages
-- JDBC for database connectivity and interaction
-- CRUD (Create, Read, Update, Delete) operations for managing data in the database
-- Schema.sql file to customize the schema and input initial data
-- Thymeleaf Fragments to reduce redundancy of repeating HTML elements (head, footer, navigation)
+Le pipeline est structuré en plusieurs stages :
+stages:
+  - install_tools
+  - test
+  - security
+  - build
+  - docker
+  - deploy
 
-## How to Run
+## Détails des Jobs
 
-1. Clone the repository
-2. Open the project in your IDE of choice
-3. Run the application
-4. To use initial user data, use the following credentials.
-  - username: bugs    |     password: bunny (user role)
-  - username: daffy   |     password: duck  (manager role)
-5. You can also sign-up as a new user and customize your role to play with the application! 😊
+## 1. 🛠️ Installation des outils
+
+Installe toutes les dépendances nécessaires :
+Java
+Maven
+Trivy
+Docker
+Kubectl
+
+## 2. ✅ Tests unitaires
+
+Exécute les tests avec Maven :
+mvn test
+
+## 3. 🔐 Analyse de sécurité
+
+🔍 Scan filesystem avec Trivy
+trivy fs --format table -o fs.html .
+
+📊 Analyse SonarQube
+
+Analyse du code
+Détection des bugs et vulnérabilités
+
+## 4. 🏗️ Build de l'application
+
+mvn package
+
+## 5. 🐳 Docker
+
+Build de l'image :
+
+docker build -t adildal/boardgitlab:latest .
+
+Push vers Docker Hub :
+
+docker push adildal/boardgitlab:latest
+
+## 6. ☸️ Déploiement Kubernetes
+
+Déploiement avec :
+kubectl apply -f deployment-service.yaml
+
+🔐 Variables d'environnement requises
+
+Dans GitLab CI/CD, configure les variables suivantes :
+DOCKER_USERNAME
+DOCKER_PASSWORD
+KUBECONFIG_CONTENT (base64 du fichier kubeconfig)
+
+📁 Structure du projet
+.
+├── .gitlab-ci.yml
+├── Dockerfile
+├── deployment-service.yaml
+├── src/
+└── pom.xml
+
+🚀 Déploiement
+Le déploiement est automatiquement déclenché sur la branche :
+master
+
+📈 Améliorations possibles
+- Ajouter des tests d'intégration
+- Mettre en place Helm pour Kubernetes
+- Ajouter monitoring (Prometheus / Grafana)
+- Sécuriser les secrets avec Vault
+
+
